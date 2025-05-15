@@ -21,17 +21,17 @@ const app = express()
 //     console.log("I am only for random")
 //     next()
 // })
-app.use("/api", (req, res, next) => {
+const checkToken = (req, res, next) => {
     let { token } = req.query;
     if (token === "giveaccess") {
         next();
     }
     res.send("ACCESS DENIED!")
 
-})
+}
 
-app.get("/api", (req, res) => {
-    res.send("data")
+app.get("/api", checkToken, (req, res) => {
+    res.send("Hello, Shivansh!! Data received")
 })
 
 //Utility middleware logger - morgan
