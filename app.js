@@ -7,14 +7,42 @@ const app = express()
 //     console.log("I am Middleware")
 //     res.send("Middleware finished")
 // })
-app.use((req, res, next) => {
-    console.log("Hi, I'm 1st middleware")
-    next();
+// app.use((req, res, next) => {
+//     console.log("Hi, I'm 1st middleware")
+//     next();
+// })
+
+// app.use((req, res, next) => {
+//     console.log("Hi, I'm 2nd middleware")
+//     next();
+// })
+
+// app.use("/random", (req, res, next) => {
+//     console.log("I am only for random")
+//     next()
+// })
+app.use("/api", (req, res, next) => {
+    let { token } = req.query;
+    if (token === "giveaccess") {
+        next();
+    }
+    res.send("ACCESS DENIED!")
+
 })
 
-app.use((req, res, next) => {
-    console.log("Hi, I'm 2nd middleware")
-    next();
+app.get("/api", (req, res) => {
+    res.send("data")
+})
+
+//Utility middleware logger - morgan
+// app.use((req, res, next) => {
+//     req.time = new Date(Date.now()).toString()
+//     console.log(req.method, req.hostname, req.path, req.time)
+//     next()
+// })
+
+app.use((req, res) => {
+    res.status(404).send("Page not found")
 })
 
 app.get("/", (req, res) => {
