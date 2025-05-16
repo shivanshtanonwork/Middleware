@@ -26,7 +26,7 @@ const checkToken = (req, res, next) => {
     if (token === "giveaccess") {
         next();
     }
-    res.send("ACCESS DENIED!")
+    throw new Error("ACCESS DENIED!");
 
 }
 
