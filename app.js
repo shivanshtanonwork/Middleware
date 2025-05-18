@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const ExpressError = require("./ExpressError")
 
 // app.use((req, res) => {
 //     let { query } = req.query
@@ -26,7 +27,7 @@ const checkToken = (req, res, next) => {
     if (token === "giveaccess") {
         next();
     }
-    throw new Error("ACCESS DENIED!");
+    throw new ExpressError(401, "ACCESS DENIED!");
 
 }
 
@@ -46,7 +47,7 @@ app.get("/err", (req, res) => {
 })
 app.use((err, req, res, next) => {
     console.log("------ERROR--------")
-    next(err)
+    res.send(err)
 })
 
 // app.use((req, res) => {
